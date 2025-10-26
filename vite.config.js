@@ -8,4 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  base: 'https://adrireca.github.io/prototipo-trueque'
 })
