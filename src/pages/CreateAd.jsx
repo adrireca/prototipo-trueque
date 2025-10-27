@@ -225,7 +225,7 @@ const CreateAd = () => {
                       value={formData.title}
                       onChange={handleInputChange}
                       // placeholder="Ej: Abogado laboralista - Busco servicios de fontanería"
-                      className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-600 ${
+                      className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 ${
                         errors.title ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -247,7 +247,7 @@ const CreateAd = () => {
                         name="category"
                         value={formData.category}
                         onChange={handleInputChange}
-                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-600 ${
+                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 ${
                           errors.category ? 'border-red-500' : 'border-gray-300'
                         }`}
                       >
@@ -273,7 +273,7 @@ const CreateAd = () => {
                         value={formData.subcategory}
                         onChange={handleInputChange}
                         disabled={!formData.category}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-600"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-600"
                       >
                         <option value="">Selecciona subcategoría</option>
                         {formData.category && subcategories[formData.category]?.map(subcat => (
@@ -294,7 +294,7 @@ const CreateAd = () => {
                       onChange={handleInputChange}
                       rows={6}
                       // placeholder="Describe tu servicio, lo que ofreces y lo que buscas a cambio. Sé lo más específico posible..."
-                      className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-600 ${
+                      className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 ${
                         errors.description ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -331,7 +331,7 @@ const CreateAd = () => {
                     />
                     <label
                       htmlFor="image-upload"
-                      className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 cursor-pointer"
+                      className="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 cursor-pointer"
                     >
                       {isEditing ? 'Agregar Imágenes' : 'Seleccionar Imágenes'}
                     </label>
@@ -370,11 +370,11 @@ const CreateAd = () => {
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h2 className="text-xl font-semibold mb-4">Información de Contacto</h2>
                 <div className="space-y-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="text-sm text-blue-700">
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <p className="text-sm text-purple-700">
                       <strong>Email de contacto:</strong> {mockUserData.email}
                     </p>
-                    <p className="text-xs text-blue-600 mt-1">
+                    <p className="text-xs text-purple-600 mt-1">
                       Los interesados se pondrán en contacto contigo a través de este email
                     </p>
                   </div>
@@ -390,7 +390,7 @@ const CreateAd = () => {
                         value={formData.contactPhone}
                         onChange={handleInputChange}
                         placeholder="+34 612 345 678"
-                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-600 ${
+                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 ${
                           errors.contactPhone ? 'border-red-500' : 'border-gray-300'
                         }`}
                       />
@@ -412,7 +412,7 @@ const CreateAd = () => {
                         value={formData.location}
                         onChange={handleInputChange}
                         placeholder="Ciudad, provincia..."
-                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-600 ${
+                        className={`w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 ${
                           errors.location ? 'border-red-500' : 'border-gray-300'
                         }`}
                       />
@@ -439,7 +439,7 @@ const CreateAd = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center space-x-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isEditing ? <Save className="w-4 h-4" /> : <Upload className="w-4 h-4" />}
                   <span>{getSubmitButtonText()}</span>
@@ -450,30 +450,30 @@ const CreateAd = () => {
 
           {/* Sidebar de Ayuda */}
           <div className="lg:col-span-1">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-800 mb-4">
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-purple-800 mb-4">
                 {isEditing ? 'Consejos para editar' : 'Consejos para publicar'}
               </h3>
-              <ul className="space-y-3 text-sm text-blue-700">
+              <ul className="space-y-3 text-sm text-purple-700">
                 <li className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
                   <span>Sé específico en lo que ofreces y lo que necesitas</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
                   <span>Incluye imágenes de calidad de tu trabajo</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
                   <span>Responde rápidamente a los interesados</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
                   <span>Verifica que la información de contacto sea correcta</span>
                 </li>
                 {isEditing && (
                   <li className="flex items-start space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
                     <span>Actualiza regularmente tu servicio para mantenerlo relevante</span>
                   </li>
                 )}

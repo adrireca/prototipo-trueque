@@ -17,7 +17,7 @@ const SearchFilters = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Categoría
           </label>
-          <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             <option value="">Todas las categorías</option>
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
@@ -33,13 +33,13 @@ const SearchFilters = () => {
           <input
             type="text"
             placeholder="Ciudad o provincia..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
         </div>
 
         {/* Botones */}
         <div className="flex space-x-2">
-          <button className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors">
             Aplicar filtros
           </button>
           <button className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">

@@ -45,7 +45,7 @@ const ServiceCard = ({ service, showLikeButton = true }) => {
       <div className="p-4">
         {/* Header */}
         <div className="mb-3">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-1 hover:text-blue-600 transition-colors">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-1 hover:text-purple-600 transition-colors">
             {service.title}
           </h3>
           

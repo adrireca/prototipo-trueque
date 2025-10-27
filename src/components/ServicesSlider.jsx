@@ -32,9 +32,9 @@ const ServicesSlider = ({ services }) => {
       <button
         onClick={scrollLeft}
         className="absolute left-0 top-1/2 transform -translate-y-1/2 z-1 
-                       bg-blue-600 border border-blue-600 rounded-full p-2 
+                       bg-purple-600 border border-purple-600 rounded-full p-2 
                        shadow-md hover:shadow-lg transition-all duration-200
-                       hover:bg-blue-500 -ml-4"
+                       hover:bg-purple-500 -ml-4"
         aria-label="Desplazar hacia la izquierda"
       >
         <ChevronLeft className="w-6 h-6 text-white" />
@@ -44,9 +44,9 @@ const ServicesSlider = ({ services }) => {
       <button
         onClick={scrollRight}
         className="absolute right-0 top-1/2 transform -translate-y-1/2 z-1 
-                       bg-blue-600 border border-blue-600 rounded-full p-2 
+                       bg-purple-600 border border-purple-600 rounded-full p-2 
                        shadow-md hover:shadow-lg transition-all duration-200
-                       hover:bg-blue-500 -mr-4"
+                       hover:bg-purple-500 -mr-4"
         aria-label="Desplazar hacia la derecha"
       >
         <ChevronRight className="w-6 h-6 text-white" />

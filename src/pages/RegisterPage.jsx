@@ -35,7 +35,7 @@ const InputField = ({
         onChange={onChange}
         placeholder={placeholder}
         className={`
-          block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors
+          block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors
           ${error 
             ? 'border-red-300 bg-red-50 focus:ring-red-500' 
             : 'border-gray-300 focus:border-transparent'
@@ -171,7 +171,7 @@ const RegisterPage = () => {
         <div className="flex justify-center">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center text-sm text-blue-600 hover:text-blue-500 mb-4"
+            className="flex items-center text-sm text-purple-600 hover:text-purple-500 mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
             Volver
@@ -269,16 +269,16 @@ const RegisterPage = () => {
                 id="terms"
                 name="terms"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                 required
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
                 Acepto los{' '}
-                <Link to="/terminos" className="text-blue-600 hover:text-blue-500">
+                <Link to="/terminos" className="text-purple-600 hover:text-purple-500">
                   términos y condiciones
                 </Link>{' '}
                 y la{' '}
-                <Link to="/privacidad" className="text-blue-600 hover:text-blue-500">
+                <Link to="/privacidad" className="text-purple-600 hover:text-purple-500">
                   política de privacidad
                 </Link>
               </label>
@@ -291,7 +291,7 @@ const RegisterPage = () => {
                 disabled={isLoading}
                 className={`
                   w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white
-                  bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                  bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500
                   transition-colors duration-200
                   ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
                 `}
@@ -313,7 +313,7 @@ const RegisterPage = () => {
                 ¿Ya tienes cuenta?{' '}
                 <Link 
                   to="/login" 
-                  className="font-medium text-blue-600 hover:text-blue-500"
+                  className="font-medium text-purple-600 hover:text-purple-500"
                 >
                   Inicia sesión aquí
                 </Link>

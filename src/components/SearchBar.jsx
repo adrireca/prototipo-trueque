@@ -130,13 +130,13 @@ const SearchBar = ({ onSearch }) => {
             <button
               onClick={() => handleCategorySelect('')}
               className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedCategory === ''
-                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                  ? 'bg-purple-100 text-purple-800 border border-purple-200'
                   : 'hover:bg-gray-100 text-gray-700'
                 }`}
             >
               <div className="flex items-center justify-between">
                 <span>Todas las categorías</span>
-                {selectedCategory === '' && <Check className="w-5 h-5 text-blue-600" />}
+                {selectedCategory === '' && <Check className="w-5 h-5 text-purple-600" />}
               </div>
             </button>
 
@@ -145,13 +145,13 @@ const SearchBar = ({ onSearch }) => {
                 key={category}
                 onClick={() => handleCategorySelect(category)}
                 className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedCategory === category
-                    ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                    ? 'bg-purple-100 text-purple-800 border border-purple-200'
                     : 'hover:bg-gray-100 text-gray-700'
                   }`}
               >
                 <div className="flex items-center justify-between">
                   <span>{category}</span>
-                  {selectedCategory === category && <Check className="w-5 h-5 text-blue-600" />}
+                  {selectedCategory === category && <Check className="w-5 h-5 text-purple-600" />}
                 </div>
               </button>
             ))}
@@ -185,7 +185,7 @@ const SearchBar = ({ onSearch }) => {
             <input
               type="text"
               placeholder="Buscar provincia..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
             />
           </div>
         </div>
@@ -196,13 +196,13 @@ const SearchBar = ({ onSearch }) => {
             <button
               onClick={() => handleProvinceSelect('')}
               className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedProvince === ''
-                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                  ? 'bg-purple-100 text-purple-800 border border-purple-200'
                   : 'hover:bg-gray-100 text-gray-700'
                 }`}
             >
               <div className="flex items-center justify-between">
                 <span>Toda España</span>
-                {selectedProvince === '' && <Check className="w-5 h-5 text-blue-600" />}
+                {selectedProvince === '' && <Check className="w-5 h-5 text-purple-600" />}
               </div>
             </button>
 
@@ -211,13 +211,13 @@ const SearchBar = ({ onSearch }) => {
                 key={province}
                 onClick={() => handleProvinceSelect(province)}
                 className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedProvince === province
-                    ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                    ? 'bg-purple-100 text-purple-800 border border-purple-200'
                     : 'hover:bg-gray-100 text-gray-700'
                   }`}
               >
                 <div className="flex items-center justify-between">
                   <span>{province}</span>
-                  {selectedProvince === province && <Check className="w-5 h-5 text-blue-600" />}
+                  {selectedProvince === province && <Check className="w-5 h-5 text-purple-600" />}
                 </div>
               </button>
             ))}
@@ -241,14 +241,14 @@ const SearchBar = ({ onSearch }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={handleSearch}
               placeholder="Estoy buscando..."
-              className="w-full pl-10 pr-4 py-4 border-r border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800 bg-white hover:bg-gray-50 transition-colors"
+              className="w-full pl-10 pr-4 py-4 border-r border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm text-gray-800 bg-white hover:bg-gray-50 transition-colors"
             />
           </div>
 
           {/* Botón de Categorías */}
           <button
             onClick={() => setShowCategoryDialog(true)}
-            className="flex items-center justify-between w-48 pl-3 pr-2 py-4 border-r border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
+            className="flex items-center justify-between w-48 pl-3 pr-2 py-4 border-r border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
           >
             <span className={selectedCategory ? "text-gray-800" : "text-gray-500"}>
               {selectedCategory || "Todas las categorías"}
@@ -259,7 +259,7 @@ const SearchBar = ({ onSearch }) => {
           {/* Botón de Provincias */}
           <button
             onClick={() => setShowProvinceDialog(true)}
-            className="flex items-center justify-between w-48 pl-3 pr-2 py-4 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
+            className="flex items-center justify-between w-48 pl-3 pr-2 py-4 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
           >
             <span className={selectedProvince ? "text-gray-800" : "text-gray-500"}>
               {selectedProvince || "Toda España"}
@@ -270,7 +270,7 @@ const SearchBar = ({ onSearch }) => {
           {/* Botón de búsqueda */}
           <button
             onClick={handleSearch}
-            className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700 transition-colors font-medium text-sm border-none flex items-center justify-center space-x-2"
+            className="bg-purple-600 text-white px-6 py-2 hover:bg-purple-700 transition-colors font-medium text-sm border-none flex items-center justify-center space-x-2"
           >
             <Search className="w-4 h-4" />
             <span>Buscar</span>

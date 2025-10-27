@@ -169,7 +169,7 @@ const Profile = () => {
     ));
   };
 
-  const StatsCard = ({ icon: Icon, label, value, color = 'blue' }) => (
+  const StatsCard = ({ icon: Icon, label, value, color = 'purple' }) => (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
       <div className="flex items-center space-x-3">
         <div className={`p-2 rounded-lg bg-${color}-100`}>
@@ -204,7 +204,7 @@ const Profile = () => {
         <div className="flex-1">
           {/* Enlace en el título */}
           <Link to={`/servicio/${service.id}`}>
-            <h3 className="font-semibold text-gray-800 hover:text-blue-600 transition-colors line-clamp-2">
+            <h3 className="font-semibold text-gray-800 hover:text-purple-600 transition-colors line-clamp-2">
               {service.title}
             </h3>
           </Link>
@@ -224,7 +224,7 @@ const Profile = () => {
               e.stopPropagation();
               navigate(`/editar-servicio/${service.id}`);
             }}
-            className="p-1 text-blue-500 hover:bg-blue-50 rounded"
+            className="p-1 text-purple-500 hover:bg-purple-50 rounded"
             title="Editar servicio"
           >
             <Edit className="w-4 h-4" />
@@ -320,7 +320,7 @@ const Profile = () => {
       </div>
 
       <p className="text-gray-600 mb-2">{review.comment}</p>
-      <p className="text-sm text-blue-600">Servicio: {review.service}</p>
+      <p className="text-sm text-purple-600">Servicio: {review.service}</p>
     </div>
   );
 
@@ -345,8 +345,8 @@ const Profile = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-700 mt-1">
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+              <p className="text-sm text-purple-700 mt-1">
                 Te enviaremos un enlace seguro a tu email para restablecer la contraseña.
               </p>
             </div>
@@ -359,7 +359,7 @@ const Profile = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 placeholder="tu@email.com"
               />
               <p className="text-xs text-gray-500 mt-1">
@@ -377,7 +377,7 @@ const Profile = () => {
               <button
                 onClick={handleSendRecoveryEmail}
                 disabled={isLoading || !email}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
               >
                 {isLoading ? (
                   <>
@@ -415,7 +415,7 @@ const Profile = () => {
             {!isEditing ? (
               <button
                 onClick={handleEditToggle}
-                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
               >
                 <Edit className="w-4 h-4" />
                 <span>Editar Perfil</span>
@@ -456,7 +456,7 @@ const Profile = () => {
                   {isEditing && (
                     <div className="absolute bottom-2 right-2">
                       <label htmlFor="avatar-upload" className="cursor-pointer">
-                        <div className="bg-blue-600 text-white p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+                        <div className="bg-purple-600 text-white p-2 rounded-full shadow-lg hover:bg-purple-700 transition-colors">
                           <Camera className="w-4 h-4" />
                         </div>
                         <input
@@ -476,7 +476,7 @@ const Profile = () => {
                     type="text"
                     value={editedData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full text-xl font-bold text-center border-b border-gray-300 focus:border-blue-500 focus:outline-none text-gray-800 mb-2"
+                    className="w-full text-xl font-bold text-center border-b border-gray-300 focus:border-purple-500 focus:outline-none text-gray-800 mb-2"
                   />
                 ) : (
                   <h2 className="text-xl font-bold text-gray-800">{userData.name}</h2>
@@ -503,7 +503,7 @@ const Profile = () => {
                       type="tel"
                       value={editedData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="flex-1 border-b border-gray-300 focus:border-blue-500 focus:outline-none text-sm"
+                      className="flex-1 border-b border-gray-300 focus:border-purple-500 focus:outline-none text-sm"
                     />
                   ) : (
                     <span className="text-sm">{userData.phone}</span>
@@ -517,7 +517,7 @@ const Profile = () => {
                       type="text"
                       value={editedData.location}
                       onChange={(e) => handleInputChange('location', e.target.value)}
-                      className="flex-1 border-b border-gray-300 focus:border-blue-500 focus:outline-none text-sm"
+                      className="flex-1 border-b border-gray-300 focus:border-purple-500 focus:outline-none text-sm"
                     />
                   ) : (
                     <span className="text-sm">{userData.location}</span>
@@ -553,19 +553,19 @@ const Profile = () => {
                 icon={Plus}
                 label="Servicios Publicados"
                 value={userServices.length}
-                color="blue"
+                color="purple"
               />
               <StatsCard
                 icon={Heart}
                 label="Total Guardados"
                 value={userServices.reduce((sum, service) => sum + service.likes, 0)}
-                color="blue"
+                color="purple"
               />
               <StatsCard
                 icon={Star}
                 label="Valoraciones Recibidas"
                 value={reviews.length}
-                color="blue"
+                color="purple"
               />
             </div>
 
@@ -583,7 +583,7 @@ const Profile = () => {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex items-center space-x-2 py-4 px-6 border-b-2 font-medium text-sm ${activeTab === tab.id
-                        ? 'border-blue-500 text-blue-600'
+                        ? 'border-purple-500 text-purple-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                         }`}
                     >
@@ -605,7 +605,7 @@ const Profile = () => {
                       <h3 className="text-xl font-semibold">Mis Servicios</h3>
                       <button
                         onClick={() => navigate('/publicar')}
-                        className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                        className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Nuevo Servicio</span>
@@ -676,7 +676,7 @@ const Profile = () => {
                     </p>
                     <button
                       onClick={() => navigate('/servicios')}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                      className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                     >
                       Explorar Servicios
                     </button>

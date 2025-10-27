@@ -52,7 +52,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
+            <div className="w-8 h-8 bg-purple-600 rounded-full"></div>
             <span className="text-xl font-bold text-gray-800">Trueque</span>
           </Link>
 
@@ -60,14 +60,14 @@ const Header = () => {
           <nav className="flex items-center space-x-4">
             <Link
               to="/publicar"
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-500 transition-colors"
+              className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-500 transition-colors"
             >
               <Plus className="w-5 h-5" />
               <span className="hidden sm:inline">Publicar</span>
             </Link>
             <Link
               to="/guardados"
-              className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 rounded-lg hover:bg-gray-50 transition-colors"
               title="Mis guardados"
             >
               <Heart className="w-5 h-5" />
@@ -77,7 +77,7 @@ const Header = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}
-                className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 rounded-lg hover:bg-gray-50 transition-colors"
                 title="Mi cuenta"
               >
                 <User className="w-5 h-5" />
@@ -115,14 +115,14 @@ const Header = () => {
                         <span>Mis guardados</span>
                       </Link>
 
-                      <Link
+                      {/* <Link
                         to="/"
                         onClick={closeDropdown}
                         className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                       >
                         <HelpCircle className="w-4 h-4" />
                         <span>Ayuda</span>
-                      </Link>
+                      </Link> */}
                       
                       <div className="border-t border-gray-100 my-1"></div>
                       

@@ -23,7 +23,7 @@ const CTABanner = () => {
     <section 
       className="relative bg-cover bg-center bg-no-repeat py-16"
       style={{
-        backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(59, 130, 246, 0.9)), url('https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`
+        backgroundImage: `linear-gradient(135deg, rgba(159, 122, 234, 0.95), rgba(183, 148, 244, 0.9)), url('https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`
       }}
     >
       <div className="max-w-6xl mx-auto px-4 relative z-1">
@@ -66,7 +66,7 @@ const CTABanner = () => {
           <div className="flex-shrink-0">
             <button 
               onClick={handlePublishClick}
-              className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-2xl hover:scale-105 flex items-center space-x-3"
+              className="group bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-2xl hover:shadow-2xl hover:scale-105 flex items-center space-x-3"
             >
               <span>Publicar Ahora</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

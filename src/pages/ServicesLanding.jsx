@@ -124,7 +124,7 @@ const ServicesLanding = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-12">
+      <section className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-12">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-4">
@@ -157,11 +157,11 @@ const ServicesLanding = () => {
             {isSearchApplied && (
               <div className="flex flex-wrap gap-2 mt-3 sm:mt-0">
                 {searchTerm && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                     Búsqueda: "{searchTerm}"
                     <button
                       onClick={() => removeFilter('search')}
-                      className="ml-1 hover:text-blue-600"
+                      className="ml-1 hover:text-purple-600"
                     >
                       ×
                     </button>
@@ -231,7 +231,7 @@ const ServicesLanding = () => {
               {isSearchApplied && (
                 <button
                   onClick={clearFilters}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                 >
                   Mostrar todos los servicios
                 </button>

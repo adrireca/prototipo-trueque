@@ -162,7 +162,7 @@ const Favorites = () => {
                       placeholder="Buscar servicios..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800 bg-white hover:bg-gray-50 transition-colors rounded-lg"
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm text-gray-800 bg-white hover:bg-gray-50 transition-colors rounded-lg"
                     />
                   </div>
                 </div>
@@ -175,7 +175,7 @@ const Favorites = () => {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-400 text-sm"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-400 text-sm"
                   >
                     <option value="">Todas las categorías</option>
                     {categories.map(category => (
@@ -185,13 +185,13 @@ const Favorites = () => {
                 </div>
 
                 {/* Estadísticas */}
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">Tus guardados</h4>
-                  <p className="text-sm text-blue-700">
+                <div className="mt-6 p-4 bg-purple-50 rounded-lg">
+                  <h4 className="font-semibold text-purple-800 mb-2">Tus guardados</h4>
+                  <p className="text-sm text-purple-700">
                     {filteredFavorites.length} de {favorites.length} servicios
                   </p>
                   {selectedCategory && (
-                    <p className="text-sm text-blue-600 mt-1">
+                    <p className="text-sm text-purple-600 mt-1">
                       Filtrado por: {selectedCategory}
                     </p>
                   )}
@@ -241,7 +241,7 @@ const Favorites = () => {
                         setSearchTerm('');
                         setSelectedCategory('');
                       }}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                      className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                     >
                       Limpiar Filtros
                     </button>
@@ -263,13 +263,13 @@ const Favorites = () => {
             <div className="flex justify-center space-x-4">
               <button
                 onClick={() => navigate('/')}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
               >
                 Explorar Servicios
               </button>
               <button
                 onClick={() => navigate('/publicar')}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
               >
                 Publicar Servicio
               </button>

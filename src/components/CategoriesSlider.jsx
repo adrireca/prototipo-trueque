@@ -25,19 +25,19 @@ const CategoriesSlider = () => {
 
   // Mapeo de iconos para las categorías del mockData
   const categoryConfig = {
-    "Legal": { icon: Scale, color: "blue" },
-    "Educación": { icon: BookOpen, color: "blue" },
-    "Diseño": { icon: Palette, color: "blue" },
-    "Reparaciones": { icon: Wrench, color: "blue" },
-    "Salud": { icon: Heart, color: "blue" },
-    "Transporte": { icon: Car, color: "blue" },
-    "Limpieza": { icon: Sparkles, color: "blue" },
-    "Cocina": { icon: Utensils, color: "blue" },
-    "Fotografía": { icon: Camera, color: "blue" },
-    "Deporte": { icon: Dumbbell, color: "blue" },
-    "Tecnología": { icon: Code, color: "blue" },
-    "Marketing": { icon: Megaphone, color: "blue" },
-    "Otros": { icon: Megaphone, color: "blue" } // Icono por defecto para "Otros"
+    "Legal": { icon: Scale, color: "purple" },
+    "Educación": { icon: BookOpen, color: "purple" },
+    "Diseño": { icon: Palette, color: "purple" },
+    "Reparaciones": { icon: Wrench, color: "purple" },
+    "Salud": { icon: Heart, color: "purple" },
+    "Transporte": { icon: Car, color: "purple" },
+    "Limpieza": { icon: Sparkles, color: "purple" },
+    "Cocina": { icon: Utensils, color: "purple" },
+    "Fotografía": { icon: Camera, color: "purple" },
+    "Deporte": { icon: Dumbbell, color: "purple" },
+    "Tecnología": { icon: Code, color: "purple" },
+    "Marketing": { icon: Megaphone, color: "purple" },
+    "Otros": { icon: Megaphone, color: "purple" } // Icono por defecto para "Otros"
   };
 
   // Función para manejar el clic en una categoría
@@ -72,7 +72,7 @@ const CategoriesSlider = () => {
 
   // Colores para Tailwind
   const colorClasses = {
-    blue: 'text-blue-600',
+    purple: 'text-purple-600',
     // green: 'bg-green-100 text-green-600 hover:bg-green-200',
     // purple: 'bg-purple-100 text-purple-600 hover:bg-purple-200',
     // orange: 'bg-orange-100 text-orange-600 hover:bg-orange-200',
@@ -95,9 +95,9 @@ const CategoriesSlider = () => {
           <button
             onClick={scrollLeft}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 z-1 
-                       bg-blue-600 border border-blue-600 rounded-full p-2 
+                       bg-purple-600 border border-purple-600 rounded-full p-2 
                        shadow-md hover:shadow-lg transition-all duration-200
-                       hover:bg-blue-500 -ml-4"
+                       hover:bg-purple-500 -ml-4"
             aria-label="Desplazar hacia la izquierda"
           >
             <ChevronLeft className="w-5 h-5 text-white-600" />
@@ -107,9 +107,9 @@ const CategoriesSlider = () => {
           <button
             onClick={scrollRight}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 z-1 
-                       bg-blue-600 border border-blue-600 rounded-full p-2 
+                       bg-purple-600 border border-purple-600 rounded-full p-2 
                        shadow-md hover:shadow-lg transition-all duration-200
-                       hover:bg-blue-500 -mr-4"
+                       hover:bg-purple-500 -mr-4"
             aria-label="Desplazar hacia la derecha"
           >
             <ChevronRight className="w-5 h-5 text-white-600" />
@@ -121,7 +121,7 @@ const CategoriesSlider = () => {
             className="flex space-x-4 overflow-x-hidden py-4 px-4 scrollbar-hide"
           >
             {categories.map((category) => {
-              const config = categoryConfig[category] || { icon: Megaphone, color: "blue" };
+              const config = categoryConfig[category] || { icon: Megaphone, color: "purple" };
               const IconComponent = config.icon;
               return (
                 <button
@@ -133,7 +133,7 @@ const CategoriesSlider = () => {
                     min-w-[100px] flex-shrink-0
                     ${colorClasses[config.color]}
                     hover:scale-105 hover:shadow-md
-                    border border-transparent hover:border-blue-300
+                    border border-transparent hover:border-purple-300
                     cursor-pointer
                   `}
                 >

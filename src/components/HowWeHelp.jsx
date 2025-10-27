@@ -64,8 +64,8 @@ const HowWeHelp = () => {
                 className="text-center p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:transform hover:-translate-y-1"
               >
                 {/* Icon Circle */}
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                  <IconComponent className="w-8 h-8 text-blue-600" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
+                  <IconComponent className="w-8 h-8 text-purple-600" />
                 </div>
                 
                 {/* Content */}
@@ -84,7 +84,7 @@ const HowWeHelp = () => {
         <div className="mt-16 bg-gray-50 rounded-2xl p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">
+              <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-2">
                 +1,000
               </div>
               <div className="text-gray-600 font-medium">
@@ -92,7 +92,7 @@ const HowWeHelp = () => {
               </div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">
+              <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-2">
                 95%
               </div>
               <div className="text-gray-600 font-medium">
@@ -100,7 +100,7 @@ const HowWeHelp = () => {
               </div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">
+              <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-2">
                 50+
               </div>
               <div className="text-gray-600 font-medium">
@@ -120,7 +120,7 @@ const HowWeHelp = () => {
           </p>
           <button 
             onClick={handleCTAClick}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+            className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
           >
             {isAuthenticated ? 'Ver Mi Perfil' : 'Únete a la Comunidad'}
           </button>

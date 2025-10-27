@@ -77,7 +77,7 @@ const Home = () => {
       <HowWeHelp />
 
       {/* Nueva Sección: Lo más buscado de Trueque */}
-      <MostSearchedSection />
+      {/* <MostSearchedSection /> */}
     </div>
   );
 };

@@ -233,7 +233,7 @@ const ServiceDetail = () => {
                           key={index}
                           onClick={() => setActiveImage(index)}
                           className={`flex-shrink-0 w-16 h-16 rounded border-2 transition-all ${activeImage === index
-                            ? 'border-blue-500 scale-105'
+                            ? 'border-purple-500 scale-105'
                             : 'border-gray-300 hover:border-gray-400'
                             }`}
                         >
@@ -327,7 +327,7 @@ const ServiceDetail = () => {
                   {/* Botón Mensaje */}
                   <a
                     href={`mailto:${service.contact.email}?subject=Interesado en trueque: ${service.title}&body=Hola ${service.user.name}, estoy interesado en tu servicio de trueque.`}
-                    className="w-full flex items-center justify-center space-x-3 bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors font-semibold"
+                    className="w-full flex items-center justify-center space-x-3 bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors font-semibold"
                   >
                     <Mail className="w-5 h-5" />
                     <span>Mensaje</span>
@@ -336,7 +336,7 @@ const ServiceDetail = () => {
                   {/* Botón Llamar */}
                   <a
                     href={`tel:${service.contact.phone}`}
-                    className="w-full flex items-center justify-center space-x-3 bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors font-semibold"
+                    className="w-full flex items-center justify-center space-x-3 bg-purple-500 text-white py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors font-semibold"
                   >
                     <Phone className="w-5 h-5" />
                     <span>Llamar</span>
@@ -417,7 +417,7 @@ const ServiceDetail = () => {
                     <div className="flex items-center space-x-2 mb-1">
                       <h4 className="font-semibold text-gray-800">{service.user.name}</h4>
                       {service.user.verified && (
-                        <ChevronRight className="w-6 h-6 text-blue-500" fill="currentColor" />
+                        <ChevronRight className="w-6 h-6 text-purple-500" fill="currentColor" />
                       )}
                     </div>
 

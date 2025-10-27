@@ -80,7 +80,7 @@ const MostSearchedSection = () => {
                   onClick={() => setActiveTab('provincias')}
                   className={`pb-3 font-normal text-sm transition-all duration-300 border-b-2 ${
                     activeTab === 'provincias'
-                      ? 'text-blue-600 border-blue-600'
+                      ? 'text-purple-600 border-purple-600'
                       : 'text-gray-500 border-transparent hover:text-gray-700'
                   }`}
                 >
@@ -90,7 +90,7 @@ const MostSearchedSection = () => {
                   onClick={() => setActiveTab('categorias')}
                   className={`pb-3 font-normal text-sm transition-all duration-300 border-b-2 ${
                     activeTab === 'categorias'
-                      ? 'text-blue-600 border-blue-600'
+                      ? 'text-purple-600 border-purple-600'
                       : 'text-gray-500 border-transparent hover:text-gray-700'
                   }`}
                 >
@@ -110,7 +110,7 @@ const MostSearchedSection = () => {
                     onClick={() => handleProvinceClick(province.name)}
                     className="flex items-center py-2 px-1 rounded transition-colors text-left w-full group"
                   >
-                    <span className="font-light text-gray-700 text-sm group-hover:text-blue-600 transition-colors">
+                    <span className="font-light text-gray-700 text-sm group-hover:text-purple-600 transition-colors">
                       {province.name}
                     </span>
                   </button>
@@ -125,7 +125,7 @@ const MostSearchedSection = () => {
                     {/* Categoría en negrita como título - clickeable */}
                     <button
                       onClick={() => handleCategoryClick(category.name)}
-                      className="font-semibold text-gray-800 text-sm hover:text-blue-600 text-left w-full transition-colors"
+                      className="font-semibold text-gray-800 text-sm hover:text-purple-600 text-left w-full transition-colors"
                     >
                       {category.name}
                     </button>
@@ -137,7 +137,7 @@ const MostSearchedSection = () => {
                           onClick={() => handleSubcategoryClick(subcategory, category.name)}
                           className="flex items-center py-1 rounded transition-colors text-left w-full group"
                         >
-                          <span className="font-light text-gray-700 text-sm group-hover:text-blue-600 transition-colors">
+                          <span className="font-light text-gray-700 text-sm group-hover:text-purple-600 transition-colors">
                             {subcategory}
                           </span>
                         </button>

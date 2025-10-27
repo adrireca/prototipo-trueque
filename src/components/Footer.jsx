@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
+              <div className="w-8 h-8 bg-purple-600 rounded-full"></div>
               <span className="text-xl font-bold">Trueque</span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
@@ -34,16 +34,16 @@ const Footer = () => {
             
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-blue-600 transition-colors">
+              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-blue-400 transition-colors">
+              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-400 transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-pink-600 transition-colors">
+              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-blue-700 transition-colors">
+              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-700 transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -52,7 +52,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-6 flex items-center">
-              {/* <Users className="w-5 h-5 mr-2 text-blue-400" /> */}
+              {/* <Users className="w-5 h-5 mr-2 text-purple-400" /> */}
               Descubrir
             </h4>
             <ul className="space-y-3">
@@ -178,13 +178,13 @@ const Footer = () => {
       </div>
 
       {/* CTA Banner */}
-      {/* <div className="bg-blue-600">
+      {/* <div className="bg-purple-600">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
             <p className="text-white text-center md:text-left">
               <strong>¿Listo para empezar?</strong> Únete a miles de profesionales que ya hacen trueque.
             </p>
-            <button className="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap">
+            <button className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap">
               Crear Cuenta Gratis
             </button>
           </div>
