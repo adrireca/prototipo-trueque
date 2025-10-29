@@ -8,6 +8,7 @@ import ServicesSlider from '../components/ServicesSlider';
 import CTABanner from '../components/CTABanner';
 import HowWeHelp from '../components/HowWeHelp';
 import MostSearchedSection from '../components/MostSearchedSection';
+import WhyUs from '../components/WhyUs'; // Updated import
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -72,6 +73,9 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* Nueva Sección: Why Us - Justo después de HowWeHelp */}
+      <WhyUs />
 
       {/* Sección Cómo podemos ayudarte */}
       <HowWeHelp />
