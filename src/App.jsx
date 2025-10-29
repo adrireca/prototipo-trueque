@@ -17,7 +17,7 @@ import { HashRouter } from 'react-router-dom';
 function App() {
   return (
     <HashRouter>
-      <Router>
+      {/* <Router> */}
         <ScrollToTop />
         <div className="min-h-screen flex flex-col">
           <Header />
@@ -36,7 +36,7 @@ function App() {
           </main>
           <Footer />
         </div>
-      </Router>
+      {/* </Router> */}
     </HashRouter>
   );
 }
