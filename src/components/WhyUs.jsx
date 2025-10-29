@@ -17,7 +17,7 @@ const WhyUs = () => {
     {
       number: 2,
       icon: Shield,
-      text: "No existe una venta de servicios si no un intercambio de los mismo así que estamos exentos de facturas e IVA."
+      text: "No existe una venta de servicios si no un intercambio de los mismos así que estamos exentos de facturas e IVA."
     },
     {
       number: 3,
