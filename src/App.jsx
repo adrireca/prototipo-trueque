@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,7 +12,6 @@ import ServicesLanding from './pages/ServicesLanding';
 import ScrollToTop from './components/ScrollToTop';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import { HashRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import ContructionBanner from './components/ConstructionBanner';
@@ -22,12 +21,11 @@ import { ServiceProvider } from './context/ServicesContext';
 
 function App() {
   return (
-    <HashRouter>
-    <AuthProvider>
-      <ServiceProvider>
-        <CategoriesProvider>
-          <ProvincesProvider>
-            <Router>
+    <Router>
+      <AuthProvider>
+        <ServiceProvider>
+          <CategoriesProvider>
+            <ProvincesProvider>
               <ScrollToTop />
               <div className="min-h-screen flex flex-col">
                 <Header />
@@ -50,12 +48,11 @@ function App() {
                 </main>
                 <Footer />
               </div>
-            </Router>
-          </ProvincesProvider>
-        </CategoriesProvider>
-      </ServiceProvider>
-    </AuthProvider>
-    </HashRouter>
+            </ProvincesProvider>
+          </CategoriesProvider>
+        </ServiceProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
