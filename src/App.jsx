@@ -55,7 +55,7 @@ function App() {
         </CategoriesProvider>
       </ServiceProvider>
     </AuthProvider>
-    // </HashRouter>
+    </HashRouter>
   );
 }
 
