@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { User, Heart, Plus, ChevronDown, LogOut, Settings, HelpCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logo-trueque-white.png';
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -55,7 +56,7 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-2">
             {/* Reemplaza la URL por la ruta de tu imagen */}
             <img 
-              src="/logo-trueque-white.png"
+              src={logo}
               alt="Trueque Logo" 
               className="h-20 object-contain"
               onError={(e) => {

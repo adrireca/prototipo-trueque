@@ -15,6 +15,7 @@ import {
   Users,
   Star
 } from 'lucide-react';
+import logo from '../assets/logo-trueque.png';
 
 const Footer = () => {
   return (
@@ -29,7 +30,7 @@ const Footer = () => {
               <Link to="/" className="flex items-center space-x-2">
                 {/* Reemplaza la URL por la ruta de tu imagen */}
                 <img
-                  src="/logo-trueque.png"
+                  src={logo}
                   alt="Trueque Logo"
                   className="h-20 object-contain"
                   onError={(e) => {
