@@ -1,11 +1,16 @@
 // src/components/SearchBar.jsx
-import React, { useState, useRef, useEffect } from 'react';
-import { Search, ChevronDown, X, Check } from 'lucide-react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { Search, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { provinces, categories } from '../data/mockData';
+import { CategoriesContext } from '../context/CategoriesContext';
+import { ProvincesContext } from '../context/ProvincesContext';
+import CategoryDialog from './dialogs/CategoryDialog';
+import ProvinceDialog from './dialogs/ProvinceDialog';
 
 const SearchBar = ({ onSearch }) => {
   const navigate = useNavigate();
+  const { categories, loading: categoriesLoading, errors: categoriesErrors } = useContext(CategoriesContext);
+  const { provinces, loading: provincesLoading, errors: provincesErrors } = useContext(ProvincesContext);
   const [selectedProvince, setSelectedProvince] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -58,174 +63,49 @@ const SearchBar = ({ onSearch }) => {
         province: selectedProvince
       };
 
-      // Si todos los filtros están vacíos, redirigir a /servicios
-      if (!filters.search && !filters.category && !filters.province) {
-        navigate('/servicios');
-        return;
-      }
+      // console.log('Filtros aplicados:', filters);
 
-      // Si se proporciona onSearch, llamarlo con los filtros
+      // Si se proporciona onSearch, llamarlo con los filtros (para uso interno en Home)
       if (onSearch) {
         onSearch(filters);
       } else {
-        // Comportamiento original: navegar a home con query params
-        const queryParams = new URLSearchParams();
-        if (filters.search) queryParams.append('search', filters.search);
-        if (filters.category) queryParams.append('category', filters.category);
-        if (filters.province) queryParams.append('province', filters.province);
-
-        const queryString = queryParams.toString();
-        navigate(`/${queryString ? `?${queryString}` : ''}`);
+        // Navegar a ServicesLanding con los filtros en el estado
+        navigate('/servicios', { 
+          state: { 
+            searchTerm: filters.search,
+            selectedCategory: filters.category,
+            selectedProvince: filters.province
+          } 
+        });
       }
     }
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setShowCategoryDialog(false);
-    // Si hay onSearch, actualizar la búsqueda inmediatamente
-    // if (onSearch) {
-    //   onSearch({
-    //     search: searchTerm.trim(),
-    //     category: category,
-    //     province: selectedProvince
-    //   });
-    // }
+  const handleCategorySelect = (categoryId) => {
+    // console.log('Categoría seleccionada:', categoryId);
+    setSelectedCategory(categoryId);
   };
 
-  const handleProvinceSelect = (province) => {
-    setSelectedProvince(province);
-    setShowProvinceDialog(false);
-    // Si hay onSearch, actualizar la búsqueda inmediatamente
-    // if (onSearch) {
-    //   onSearch({
-    //     search: searchTerm.trim(),
-    //     category: selectedCategory,
-    //     province: province
-    //   });
-    // }
+  const handleProvinceSelect = (provinceId) => {
+    // console.log('Provincia seleccionada:', provinceId);
+    setSelectedProvince(provinceId);
   };
 
-  // Resto del código del SearchBar se mantiene igual...
-  const CategoryDialog = () => (
-    <div className="fixed inset-0 bg-gray-500 flex items-center justify-center p-4 z-100" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-      <div
-        ref={categoryDialogRef}
-        className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-hidden"
-      >
-        {/* Header del Dialog */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800">Seleccionar Categoría</h3>
-          <button
-            onClick={() => setShowCategoryDialog(false)}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
+  // Función para obtener el nombre de la categoría seleccionada
+  const getSelectedCategoryName = () => {
+    if (!selectedCategory) return "Todas las categorías";
+    
+    const category = categories.find(cat => cat._id === selectedCategory);
+    return category ? category.name : "Todas las categorías";
+  };
 
-        {/* Lista de categorías */}
-        <div className="overflow-y-auto max-h-64">
-          <div className="p-2">
-            <button
-              onClick={() => handleCategorySelect('')}
-              className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedCategory === ''
-                  ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                  : 'hover:bg-gray-100 text-gray-700'
-                }`}
-            >
-              <div className="flex items-center justify-between">
-                <span>Todas las categorías</span>
-                {selectedCategory === '' && <Check className="w-5 h-5 text-purple-600" />}
-              </div>
-            </button>
-
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => handleCategorySelect(category)}
-                className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedCategory === category
-                    ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                    : 'hover:bg-gray-100 text-gray-700'
-                  }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span>{category}</span>
-                  {selectedCategory === category && <Check className="w-5 h-5 text-purple-600" />}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const ProvinceDialog = () => (
-    <div className="fixed inset-0 bg-gray-500 flex items-center justify-center p-4 z-100" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-      <div
-        ref={provinceDialogRef}
-        className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-hidden"
-      >
-        {/* Header del Dialog */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800">Seleccionar Provincia</h3>
-          <button
-            onClick={() => setShowProvinceDialog(false)}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Buscador de provincias */}
-        <div className="p-4 border-b border-gray-200">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Buscar provincia..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
-            />
-          </div>
-        </div>
-
-        {/* Lista de provincias */}
-        <div className="overflow-y-auto max-h-64">
-          <div className="p-2">
-            <button
-              onClick={() => handleProvinceSelect('')}
-              className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedProvince === ''
-                  ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                  : 'hover:bg-gray-100 text-gray-700'
-                }`}
-            >
-              <div className="flex items-center justify-between">
-                <span>Toda España</span>
-                {selectedProvince === '' && <Check className="w-5 h-5 text-purple-600" />}
-              </div>
-            </button>
-
-            {provinces.map(province => (
-              <button
-                key={province}
-                onClick={() => handleProvinceSelect(province)}
-                className={`w-full text-left px-4 py-3 rounded-lg mb-1 transition-colors ${selectedProvince === province
-                    ? 'bg-purple-100 text-purple-800 border border-purple-200'
-                    : 'hover:bg-gray-100 text-gray-700'
-                  }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span>{province}</span>
-                  {selectedProvince === province && <Check className="w-5 h-5 text-purple-600" />}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  // Función para obtener el nombre de la provincia seleccionada
+  const getSelectedProvinceName = () => {
+    if (!selectedProvince) return "Toda España";
+    
+    const province = provinces.find(prov => prov._id === selectedProvince);
+    return province ? province.name : "Toda España";
+  };
 
   return (
     <div className="flex-1 max-w-4xl mx-4">
@@ -251,7 +131,7 @@ const SearchBar = ({ onSearch }) => {
             className="flex items-center justify-between w-48 pl-3 pr-2 py-4 border-r border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
           >
             <span className={selectedCategory ? "text-gray-800" : "text-gray-500"}>
-              {selectedCategory || "Todas las categorías"}
+              {getSelectedCategoryName()}
             </span>
             <ChevronDown className="text-gray-400 w-4 h-4" />
           </button>
@@ -262,7 +142,7 @@ const SearchBar = ({ onSearch }) => {
             className="flex items-center justify-between w-48 pl-3 pr-2 py-4 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm bg-white hover:bg-gray-50 transition-colors"
           >
             <span className={selectedProvince ? "text-gray-800" : "text-gray-500"}>
-              {selectedProvince || "Toda España"}
+              {getSelectedProvinceName()}
             </span>
             <ChevronDown className="text-gray-400 w-4 h-4" />
           </button>
@@ -279,8 +159,27 @@ const SearchBar = ({ onSearch }) => {
       </div>
 
       {/* Dialogs Modales */}
-      {showCategoryDialog && <CategoryDialog />}
-      {showProvinceDialog && <ProvinceDialog />}
+      <CategoryDialog
+        ref={categoryDialogRef}
+        isOpen={showCategoryDialog}
+        onClose={() => setShowCategoryDialog(false)}
+        categories={categories}
+        loading={categoriesLoading}
+        errors={categoriesErrors}
+        selectedCategory={selectedCategory}
+        onCategorySelect={handleCategorySelect}
+      />
+
+      <ProvinceDialog
+        ref={provinceDialogRef}
+        isOpen={showProvinceDialog}
+        onClose={() => setShowProvinceDialog(false)}
+        provinces={provinces}
+        loading={provincesLoading}
+        errors={provincesErrors}
+        selectedProvince={selectedProvince}
+        onProvinceSelect={handleProvinceSelect}
+      />
     </div>
   );
 };

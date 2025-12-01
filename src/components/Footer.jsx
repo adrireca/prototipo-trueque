@@ -1,13 +1,14 @@
 // src/components/Footer.jsx
 import React from 'react';
-import { 
-  Heart, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
+import { Link } from 'react-router-dom';
+import {
+  Heart,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
   Linkedin,
   ArrowRight,
   Shield,
@@ -17,33 +18,45 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-black text-white" style={({ backgroundColor: '#9810fa' })}>
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-purple-600 rounded-full"></div>
-              <span className="text-xl font-bold">Trueque</span>
+              {/* Logo con imagen */}
+              <Link to="/" className="flex items-center space-x-2">
+                {/* Reemplaza la URL por la ruta de tu imagen */}
+                <img
+                  src="/logo-trueque.png"
+                  alt="Trueque Logo"
+                  className="h-20 object-contain"
+                  onError={(e) => {
+                    // Fallback en caso de que la imagen no cargue
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+              </Link>
             </div>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              Conectamos profesionales para intercambiar servicios sin intermediarios. 
+            <p className="text-white-300 mb-6 leading-relaxed">
+              Conectamos profesionales para intercambiar servicios sin intermediarios.
               Únete a nuestra comunidad de trueque y descubre una nueva forma de colaborar.
             </p>
-            
+
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
+              <a href="#" className="bg-purple-600 hover:bg-purple-800 p-2 rounded-lg transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-400 transition-colors">
+              <a href="#" className="bg-purple-600 hover:bg-purple-800 p-2 rounded-lg transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-600 transition-colors">
+              <a href="#" className="bg-purple-600 hover:bg-purple-800 p-2 rounded-lg transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-lg hover:bg-purple-700 transition-colors">
+              <a href="#" className="bg-purple-600 hover:bg-purple-800 p-2 rounded-lg transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -57,13 +70,13 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                <a href="#" className="text-white-300 hover:text-gray-800 transition-colors flex items-center group">
                   <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
                   Explorar Servicios
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                <a href="#" className="text-white-300 hover:text-gray-800 transition-colors flex items-center group">
                   <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
                   Categorías Populares
                 </a>
@@ -75,7 +88,7 @@ const Footer = () => {
                 </a>
               </li> */}
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center group">
+                <a href="#" className="text-white-300 hover:text-gray-800 transition-colors flex items-center group">
                   <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
                   Cómo Funciona
                 </a>
@@ -91,12 +104,12 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a href="#" className="text-white-300 hover:text-gray-800 transition-colors">
                   Sobre Nosotros
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a href="#" className="text-white-300 hover:text-gray-800 transition-colors">
                   Blog
                 </a>
               </li>
@@ -119,32 +132,36 @@ const Footer = () => {
               {/* <Star className="w-5 h-5 mr-2 text-yellow-400" /> */}
               ¿Necesitas ayuda?
             </h4>
-            
+
             {/* Contact Info */}
             <div className="space-y-3 mb-6">
-              <div className="flex items-center space-x-2 text-gray-300">
+              <div className="flex items-center space-x-2 text-white-300 hover:text-gray-800">
                 <Mail className="w-4 h-4" />
-                <span>info@truequeservicios.com</span>
+                <a href="mailto:info@truequeservicios.com" className="text-white-300 hover:text-gray-800 transition-colors">
+                  info@truequeservicios.com
+                </a>
               </div>
-              <div className="flex items-center space-x-2 text-gray-300">
+              <div className="flex items-center space-x-2 text-white-300 hover:text-gray-800">
                 <Phone className="w-4 h-4" />
-                <span>+34 900 123 456</span>
+                <a href="tel:+34900123456" className="text-white-300 hover:text-gray-800 transition-colors">
+                  +34 900 123 456
+                </a>
               </div>
-              <div className="flex items-center space-x-2 text-gray-300">
+              {/* <div className="flex items-center space-x-2 text-gray-300">
                 <MapPin className="w-4 h-4" />
                 <span>Valencia, España</span>
-              </div>
+              </div> */}
             </div>
 
             {/* Legal Links */}
             <div className="space-y-2">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors block">
+              <a href="#" className="text-white-300 hover:text-gray-800 text-sm transition-colors block">
                 Términos y Condiciones
               </a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors block">
+              <a href="#" className="text-white-300 hover:text-gray-800 text-sm transition-colors block">
                 Política de Privacidad
               </a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors block">
+              <a href="#" className="text-white-300 hover:text-gray-800 text-sm transition-colors block">
                 Cookies
               </a>
             </div>
@@ -153,11 +170,11 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-purple-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
-            <div className="text-gray-400 text-sm">
+            <div className="text-white-400 text-sm">
               <p>&copy; 2025 Trueque. Todos los derechos reservados.</p>
             </div>
 

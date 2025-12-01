@@ -1,17 +1,18 @@
 // src/pages/LoginPage.jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
-// Componente InputField movido fuera del componente principal
-const InputField = ({ 
-  label, 
-  type, 
-  name, 
-  value, 
-  onChange, 
-  error, 
-  placeholder, 
+// Componente InputField actualizado para ser consistente con RegisterPage
+const InputField = ({
+  label,
+  type,
+  name,
+  register,
+  error,
+  placeholder,
   icon: Icon,
   showToggle = false,
   onToggleVisibility,
@@ -27,18 +28,16 @@ const InputField = ({
       </div>
       <input
         id={name}
-        name={name}
         type={type}
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
         className={`
           block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors
-          ${error 
-            ? 'border-red-300 bg-red-50 focus:ring-red-500' 
+          ${error
+            ? 'border-red-300 bg-red-50 focus:ring-red-500'
             : 'border-gray-300 focus:border-transparent'
           }
         `}
+        {...register(name)}
       />
       {showToggle && (
         <button
@@ -51,7 +50,7 @@ const InputField = ({
       )}
     </div>
     {error && (
-      <p className="mt-1 text-sm text-red-600">{error}</p>
+      <p className="mt-1 text-sm text-red-600">{error.message}</p>
     )}
   </div>
 );
@@ -59,122 +58,80 @@ const InputField = ({
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { signin, isAuthenticated, errors: authErrors, clearErrors } = useAuth();
   
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   // Obtener mensaje de éxito del registro si existe
   const successMessage = location.state?.message;
   const registeredEmail = location.state?.email;
 
+  // console.log(authErrors.field);
+
+  // Limpiar errores al montar el componente
+  useEffect(() => {
+    clearErrors();
+  }, []);
+
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Configuración de react-hook-form
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      email: registeredEmail || '',
+      password: ''
+    },
+    mode: 'onChange'
+  });
+
   // Si hay un email del registro, prellenar el campo email
-  React.useEffect(() => {
+  useEffect(() => {
     if (registeredEmail) {
-      setFormData(prev => ({
-        ...prev,
-        email: registeredEmail
-      }));
+      setValue('email', registeredEmail);
     }
-  }, [registeredEmail]);
+  }, [registeredEmail, setValue]);
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Limpiar error del campo cuando el usuario empiece a escribir
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  }, [errors]);
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Validar email
-    if (!formData.email.trim()) {
-      newErrors.email = 'El email es obligatorio';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'El formato del email no es válido';
-    }
-
-    // Validar contraseña
-    if (!formData.password) {
-      newErrors.password = 'La contraseña es obligatoria';
-    }
-
-    return newErrors;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      return;
-    }
-
+  const onSubmit = async (data) => {
     setIsLoading(true);
+    setSubmitError('');
+    clearErrors();
 
     try {
-      // Simular inicio de sesión (aquí iría la llamada a tu API)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Datos de login:', {
-        email: formData.email,
-        password: '***' // No mostrar la contraseña real en logs
-      });
+      const success = await signin(data);
 
-      // Simular token de autenticación
-      localStorage.setItem('authToken', 'simulated-token-' + Date.now());
-      localStorage.setItem('userEmail', formData.email);
-
-      // Redirigir al dashboard o página principal después del login exitoso
-      navigate('/', { 
-        replace: true,
-        state: { 
-          message: '¡Bienvenido de nuevo!'
-        }
-      });
+      if (success && authErrors.length === 0) {
+        navigate('/', { 
+          replace: true,
+          state: { 
+            message: '¡Bienvenido de nuevo!'
+          }
+        });
+      }
+      // Si hay errores de autenticación, se mostrarán automáticamente
       
     } catch (error) {
-      setErrors({ submit: 'Credenciales incorrectas. Inténtalo de nuevo.' });
+      setSubmitError('Error al iniciar sesión. Inténtalo de nuevo.');
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleDemoLogin = (demoType) => {
-    const demoAccounts = {
-      user: { email: 'usuario@demo.com', password: 'demouser123' },
-      professional: { email: 'profesional@demo.com', password: 'demopro123' }
-    };
-
-    const demoAccount = demoAccounts[demoType];
-    setFormData(demoAccount);
-    
-    // Auto-login después de un breve delay para que el usuario vea los datos
-    setTimeout(() => {
-      handleSubmit(new Event('submit'));
-    }, 500);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        
         <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
           Iniciar Sesión
         </h2>
@@ -192,17 +149,23 @@ const LoginPage = () => {
             </div>
           )}
 
-          <form className="space-y-6 text-gray-600" onSubmit={handleSubmit}>
+          <form className="space-y-6 text-gray-600" onSubmit={handleSubmit(onSubmit)}>
             {/* Email */}
             <InputField
               label="Email"
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={errors.email}
-            //   placeholder="tu@email.com"
+              register={register}
+              error={errors.email || (authErrors.field === 'email' ? { message: authErrors.message } : null)}
+              // placeholder="tu@email.com"
               icon={Mail}
+              {...register('email', {
+                required: 'El email es obligatorio',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'El formato del email no es válido'
+                }
+              })}
             />
 
             {/* Contraseña */}
@@ -210,14 +173,16 @@ const LoginPage = () => {
               label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              value={formData.password}
-              onChange={handleChange}
-              error={errors.password}
-            //   placeholder="Tu contraseña"
+              register={register}
+              error={errors.password || (authErrors.field === 'password' ? { message: authErrors.message } : null)}
+              // placeholder="Tu contraseña"
               icon={Lock}
               showToggle={true}
               onToggleVisibility={() => setShowPassword(!showPassword)}
               isVisible={showPassword}
+              {...register('password', {
+                required: 'La contraseña es obligatoria'
+              })}
             />
 
             {/* Recordar contraseña y olvidé contraseña */}
@@ -244,10 +209,21 @@ const LoginPage = () => {
               </div>
             </div>
 
-            {/* Error de submit */}
-            {errors.submit && (
+            {/* Errores de autenticación del contexto */}
+            {authErrors.length > 0 && (
               <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{errors.submit}</div>
+                <div className="text-sm text-red-700">
+                  {authErrors.map((error, index) => (
+                    <p key={index}>{error}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Error de submit */}
+            {submitError && (
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="text-sm text-red-700">{submitError}</div>
               </div>
             )}
 

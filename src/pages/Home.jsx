@@ -8,7 +8,7 @@ import ServicesSlider from '../components/ServicesSlider';
 import CTABanner from '../components/CTABanner';
 import HowWeHelp from '../components/HowWeHelp';
 import MostSearchedSection from '../components/MostSearchedSection';
-import WhyUs from '../components/WhyUs'; // Updated import
+import WhyUs from '../components/WhyUs';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -16,12 +16,14 @@ const Home = () => {
 
   // Función para manejar la búsqueda desde el SearchBar
   const handleSearch = (searchData) => {
+    // console.log('Búsqueda desde Home:', searchData);
+    
     // Navegar a la landing de servicios con el estado de búsqueda
     navigate('/servicios', {
       state: {
         searchTerm: searchData.search || '',
         selectedCategory: searchData.category || '',
-        selectedLocation: searchData.province || ''
+        selectedProvince: searchData.province || '' // ← CAMBIADO: selectedLocation → selectedProvince
       }
     });
   };

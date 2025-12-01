@@ -1,42 +1,56 @@
 // src/pages/ServicesLanding.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { mockServices } from '../data/mockData';
 import ServiceCard from '../components/ServiceCard';
 import SearchBar from '../components/SearchBar';
+import { CategoriesContext } from '../context/CategoriesContext';
+import { ProvincesContext } from '../context/ProvincesContext';
 
 const ServicesLanding = () => {
   const [services, setServices] = useState(mockServices);
   const [filteredServices, setFilteredServices] = useState(mockServices);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('');
   const [isSearchApplied, setIsSearchApplied] = useState(false);
 
   const location = useLocation();
+  const { categories } = useContext(CategoriesContext);
+  const { provinces } = useContext(ProvincesContext);
 
-  // Efecto para detectar todos los filtros desde el estado de navegación
+  // Efecto para detectar filtros desde el estado de navegación
   useEffect(() => {
+    // console.log('Location state:', location.state);
+    
     if (location.state) {
-      const { searchTerm, selectedCategory, selectedLocation } = location.state;
+      const { 
+        searchTerm: stateSearchTerm, 
+        selectedCategory: stateCategory, 
+        selectedProvince: stateProvince 
+      } = location.state;
       
       let hasFilters = false;
 
-      if (searchTerm) {
-        setSearchTerm(searchTerm);
+      if (stateSearchTerm) {
+        setSearchTerm(stateSearchTerm);
         hasFilters = true;
+        console.log('Search term from state:', stateSearchTerm);
       }
-      if (selectedCategory) {
-        setSelectedCategory(selectedCategory);
+      if (stateCategory) {
+        setSelectedCategory(stateCategory);
         hasFilters = true;
+        // console.log('Category from state:', stateCategory);
       }
-      if (selectedLocation) {
-        setSelectedLocation(selectedLocation);
+      if (stateProvince) {
+        setSelectedProvince(stateProvince);
         hasFilters = true;
+        // console.log('Province from state:', stateProvince);
       }
 
       if (hasFilters) {
         setIsSearchApplied(true);
+        // console.log('Search applied with filters');
       }
 
       // Limpiar el estado de navegación para evitar que se aplique múltiples veces
@@ -46,6 +60,13 @@ const ServicesLanding = () => {
 
   // Filtrar servicios cuando cambien los filtros aplicados
   useEffect(() => {
+    // console.log('Filtrando servicios...');
+    // console.log('SearchTerm:', searchTerm);
+    // console.log('SelectedCategory:', selectedCategory);
+    // console.log('SelectedProvince:', selectedProvince);
+    // console.log('Categories disponibles:', categories.length);
+    // console.log('Provinces disponibles:', provinces.length);
+
     let filtered = services;
 
     // Solo aplicar filtros si se ha hecho una búsqueda
@@ -59,70 +80,85 @@ const ServicesLanding = () => {
         );
       }
 
-      // Filtrar por categoría
+      // Filtrar por categoría (usando ID de categoría)
       if (selectedCategory) {
-        filtered = filtered.filter(service => service.category === selectedCategory);
+        // Buscar el nombre de la categoría para comparar con los servicios mock
+        const category = categories.find(cat => cat._id === selectedCategory);
+        // console.log('Categoría encontrada:', category);
+        if (category) {
+          filtered = filtered.filter(service => service.category === category.name);
+        }
       }
 
-      // Filtrar por ubicación
-      if (selectedLocation) {
-        filtered = filtered.filter(service => service.location === selectedLocation);
+      // Filtrar por provincia (usando ID de provincia)
+      if (selectedProvince) {
+        // Buscar el nombre de la provincia para comparar con los servicios mock
+        const province = provinces.find(prov => prov._id === selectedProvince);
+        // console.log('Provincia encontrada:', province);
+        if (province) {
+          filtered = filtered.filter(service => service.location === province.name);
+        }
       }
     }
 
+    // console.log('Servicios filtrados:', filtered.length);
     setFilteredServices(filtered);
-  }, [searchTerm, selectedCategory, selectedLocation, services, isSearchApplied]);
+  }, [searchTerm, selectedCategory, selectedProvince, services, isSearchApplied, categories, provinces]);
 
-  // Función para manejar la búsqueda desde el SearchBar
+  // Función para manejar la búsqueda desde el SearchBar (cuando se usa dentro de ServicesLanding)
   const handleSearchFromBar = (searchData) => {
+    // console.log('Búsqueda desde bar:', searchData);
     setSearchTerm(searchData.search || '');
     setSelectedCategory(searchData.category || '');
-    setSelectedLocation(searchData.province || '');
-    setIsSearchApplied(true); // Marcar que se aplicó la búsqueda
+    setSelectedProvince(searchData.province || '');
+    setIsSearchApplied(true);
   };
 
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedCategory('');
-    setSelectedLocation('');
-    setIsSearchApplied(false); // Resetear el estado de búsqueda aplicada
+    setSelectedProvince('');
+    setIsSearchApplied(false);
   };
 
   // Función para quitar un filtro individual
   const removeFilter = (filterType) => {
-    let newSearchTerm = searchTerm;
-    let newCategory = selectedCategory;
-    let newLocation = selectedLocation;
-
     switch (filterType) {
       case 'search':
-        newSearchTerm = '';
+        setSearchTerm('');
         break;
       case 'category':
-        newCategory = '';
+        setSelectedCategory('');
         break;
-      case 'location':
-        newLocation = '';
+      case 'province':
+        setSelectedProvince('');
         break;
       default:
         break;
     }
 
-    setSearchTerm(newSearchTerm);
-    setSelectedCategory(newCategory);
-    setSelectedLocation(newLocation);
-    
     // Si después de quitar el filtro no hay ningún filtro activo, mostrar todos los servicios
-    if (!newSearchTerm && !newCategory && !newLocation) {
+    if (!searchTerm && !selectedCategory && !selectedProvince) {
       setIsSearchApplied(false);
-    } else {
-      // Si todavía hay algún filtro activo, mantener la búsqueda aplicada
-      setIsSearchApplied(true);
     }
   };
 
+  // Función para obtener el nombre de la categoría seleccionada
+  const getCategoryName = (categoryId) => {
+    if (!categoryId) return '';
+    const category = categories.find(cat => cat._id === categoryId);
+    return category ? category.name : '';
+  };
+
+  // Función para obtener el nombre de la provincia seleccionada
+  const getProvinceName = (provinceId) => {
+    if (!provinceId) return '';
+    const province = provinces.find(prov => prov._id === provinceId);
+    return province ? province.name : '';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="min-h-screen bg-gray-50 pt-35">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-12">
         <div className="max-w-6xl mx-auto px-4">
@@ -135,7 +171,7 @@ const ServicesLanding = () => {
             </p>
           </div>
 
-          {/* Usar el SearchBar component */}
+          {/* SearchBar dentro de ServicesLanding */}
           <div className="flex justify-center">
             <SearchBar onSearch={handleSearchFromBar} />
           </div>
@@ -151,6 +187,11 @@ const ServicesLanding = () => {
               <h2 className="text-2xl font-bold text-gray-800">
                 {isSearchApplied ? 'Resultados de Búsqueda' : 'Trueque Servicios'}
               </h2>
+              {isSearchApplied && (
+                <p className="text-gray-600 mt-1">
+                  {filteredServices.length} {filteredServices.length === 1 ? 'servicio encontrado' : 'servicios encontrados'}
+                </p>
+              )}
             </div>
 
             {/* Filtros activos - Solo mostrar cuando hay búsqueda aplicada */}
@@ -169,7 +210,7 @@ const ServicesLanding = () => {
                 )}
                 {selectedCategory && (
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    {selectedCategory}
+                    Categoría: {getCategoryName(selectedCategory)}
                     <button
                       onClick={() => removeFilter('category')}
                       className="ml-1 hover:text-green-600"
@@ -178,18 +219,18 @@ const ServicesLanding = () => {
                     </button>
                   </span>
                 )}
-                {selectedLocation && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                    {selectedLocation}
+                {selectedProvince && (
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Provincia: {getProvinceName(selectedProvince)}
                     <button
-                      onClick={() => removeFilter('location')}
-                      className="ml-1 hover:text-purple-600"
+                      onClick={() => removeFilter('province')}
+                      className="ml-1 hover:text-blue-600"
                     >
                       ×
                     </button>
                   </span>
                 )}
-                {(searchTerm || selectedCategory || selectedLocation) && (
+                {(searchTerm || selectedCategory || selectedProvince) && (
                   <button
                     onClick={clearFilters}
                     className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"

@@ -1,17 +1,18 @@
 // src/pages/RegisterPage.jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
-// Componente InputField movido fuera del componente principal
-const InputField = ({ 
-  label, 
-  type, 
-  name, 
-  value, 
-  onChange, 
-  error, 
-  placeholder, 
+// Componente InputField (se mantiene igual)
+const InputField = ({
+  label,
+  type,
+  name,
+  register,
+  error,
+  placeholder,
   icon: Icon,
   optional = false,
   showToggle = false,
@@ -29,18 +30,16 @@ const InputField = ({
       </div>
       <input
         id={name}
-        name={name}
         type={type}
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
         className={`
           block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors
-          ${error 
-            ? 'border-red-300 bg-red-50 focus:ring-red-500' 
+          ${error
+            ? 'border-red-300 bg-red-50 focus:ring-red-500'
             : 'border-gray-300 focus:border-transparent'
           }
         `}
+        {...register(name)}
       />
       {showToggle && (
         <button
@@ -53,131 +52,80 @@ const InputField = ({
       )}
     </div>
     {error && (
-      <p className="mt-1 text-sm text-red-600">{error}</p>
+      <p className="mt-1 text-sm text-red-600">{error.message}</p>
     )}
   </div>
 );
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: ''
-  });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const { signup, isAuthenticated, errors: registerError, clearErrors } = useAuth();
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Limpiar error del campo cuando el usuario empiece a escribir
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+  useEffect(() => {
+    clearErrors();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/perfil');
     }
-  }, [errors]);
+    // return clearErrors();
+  }, [isAuthenticated, navigate]);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Validar nombre
-    if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es obligatorio';
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setError
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
+      terms: false
     }
+  });
 
-    // Validar email
-    if (!formData.email.trim()) {
-      newErrors.email = 'El email es obligatorio';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'El formato del email no es válido';
-    }
+  const password = watch('password');
 
-    // Validar teléfono (opcional pero si se ingresa debe tener formato válido)
-    if (formData.phone && !/^[+]?[\d\s\-()]{10,}$/.test(formData.phone)) {
-      newErrors.phone = 'El formato del teléfono no es válido';
-    }
-
-    // Validar contraseña
-    if (!formData.password) {
-      newErrors.password = 'La contraseña es obligatoria';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
-    }
-
-    // Validar confirmación de contraseña
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Confirma tu contraseña';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden';
-    }
-
-    return newErrors;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      return;
-    }
-
+  const onSubmit = async (data) => {
     setIsLoading(true);
+    setSubmitError('');
 
     try {
-      // Simular registro (aquí iría la llamada a tu API)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log('Datos de registro:', {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || 'No proporcionado',
-        password: '***' // No mostrar la contraseña real en logs
-      });
+      // Llamar a signup y esperar la respuesta
+      const success = await signup(data);
 
-      // Redirigir al login después del registro exitoso
-      navigate('/perfil', { 
-        state: { 
-          message: '¡Registro exitoso! Por favor inicia sesión.',
-          email: formData.email
-        }
-      });
-      
+      // Solo redirigir si el registro fue exitoso (sin errores de email duplicado)
+      if (success && registerError.length === 0) {
+        navigate('/perfil', {
+          state: {
+            message: '¡Registro exitoso! Por favor inicia sesión.',
+            email: data.email
+          }
+        });
+      }
+      // Si hay errores (como email duplicado), no redirigir y mostrar los errores
+
     } catch (error) {
-      setErrors({ submit: 'Error al registrar usuario. Inténtalo de nuevo.' });
+      setSubmitError('Error al registrar usuario. Inténtalo de nuevo.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-40 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center text-sm text-purple-600 hover:text-purple-500 mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Volver
-          </button>
-        </div>
-        
         <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
           Crear Cuenta
         </h2>
@@ -188,17 +136,27 @@ const RegisterPage = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6 text-gray-600" onSubmit={handleSubmit}>
+          <form className="space-y-6 text-gray-600" onSubmit={handleSubmit(onSubmit)}>
             {/* Nombre */}
             <InputField
               label="Nombre completo"
               type="text"
               name="name"
-              value={formData.name}
-              onChange={handleChange}
+              register={register}
               error={errors.name}
-            //   placeholder="Tu nombre completo"
+              // placeholder="Tu nombre completo"
               icon={User}
+              {...register('name', {
+                required: 'El nombre es obligatorio',
+                minLength: {
+                  value: 2,
+                  message: 'El nombre debe tener al menos 2 caracteres'
+                },
+                pattern: {
+                  value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                  message: 'El nombre solo puede contener letras y espacios'
+                }
+              })}
             />
 
             {/* Email */}
@@ -206,11 +164,17 @@ const RegisterPage = () => {
               label="Email"
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={errors.email}
-            //   placeholder="tu@email.com"
+              register={register}
+              error={errors.email || (registerError.length > 0 ? { message: registerError[0] } : null)}
+              // placeholder="tu@email.com"
               icon={Mail}
+              {...register('email', {
+                required: 'El email es obligatorio',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'El formato del email no es válido'
+                }
+              })}
             />
 
             {/* Teléfono (opcional) */}
@@ -218,12 +182,25 @@ const RegisterPage = () => {
               label="Teléfono"
               type="tel"
               name="phone"
-              value={formData.phone}
-              onChange={handleChange}
+              register={register}
               error={errors.phone}
-            //   placeholder="+34 612 345 678"
+              // placeholder="612 345 678"
               icon={Phone}
               optional={true}
+              prefix="+34"
+              {...register('phone', {
+                pattern: {
+                  value: /^(\+34)?[\d\s\-()]{9,}$/,
+                  message: 'El formato del teléfono no es válido'
+                },
+                setValueAs: (value) => {
+                  // Si el usuario no ingresa el +34, lo agregamos automáticamente
+                  if (value && !value.startsWith('+34')) {
+                    return `+34${value.replace(/\s/g, '')}`;
+                  }
+                  return value;
+                }
+              })}
             />
 
             {/* Contraseña */}
@@ -231,14 +208,20 @@ const RegisterPage = () => {
               label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              register={register}
               error={errors.password}
-            //   placeholder="Mínimo 6 caracteres"
+              // placeholder="Mínimo 6 caracteres"
               icon={Lock}
               showToggle={true}
               onToggleVisibility={() => setShowPassword(!showPassword)}
               isVisible={showPassword}
+              {...register('password', {
+                required: 'La contraseña es obligatoria',
+                minLength: {
+                  value: 6,
+                  message: 'La contraseña debe tener al menos 6 caracteres'
+                }
+              })}
             />
 
             {/* Confirmar Contraseña */}
@@ -246,31 +229,29 @@ const RegisterPage = () => {
               label="Confirmar contraseña"
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              register={register}
               error={errors.confirmPassword}
-            //   placeholder="Repite tu contraseña"
+              // placeholder="Repite tu contraseña"
               icon={Lock}
               showToggle={true}
               onToggleVisibility={() => setShowConfirmPassword(!showConfirmPassword)}
               isVisible={showConfirmPassword}
+              {...register('confirmPassword', {
+                required: 'Confirma tu contraseña',
+                validate: value =>
+                  value === password || 'Las contraseñas no coinciden'
+              })}
             />
 
-            {/* Error de submit */}
-            {errors.submit && (
-              <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{errors.submit}</div>
-              </div>
-            )}
-
             {/* Términos y condiciones */}
-            <div className="flex items-center">
+            <div className="flex items-start">
               <input
                 id="terms"
-                name="terms"
                 type="checkbox"
-                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                required
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded mt-1"
+                {...register('terms', {
+                  required: 'Debes aceptar los términos y condiciones'
+                })}
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
                 Acepto los{' '}
@@ -283,6 +264,16 @@ const RegisterPage = () => {
                 </Link>
               </label>
             </div>
+            {errors.terms && (
+              <p className="mt-1 text-sm text-red-600">{errors.terms.message}</p>
+            )}
+
+            {/* Error de submit */}
+            {submitError && (
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="text-sm text-red-700">{submitError}</div>
+              </div>
+            )}
 
             {/* Botón de registro */}
             <div>
@@ -311,8 +302,8 @@ const RegisterPage = () => {
             <div className="text-center">
               <span className="text-sm text-gray-600">
                 ¿Ya tienes cuenta?{' '}
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="font-medium text-purple-600 hover:text-purple-500"
                 >
                   Inicia sesión aquí
